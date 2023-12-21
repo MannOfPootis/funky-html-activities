@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Krogec Grid</title>
+  <style>
+    .button {
+      width: 20px;
+      height: 20px;
+      border: 1px solid #ccc;
+      background-color: white;
+    }
+  </style>
+</head>
+<body>
+  <p id="demo"></p>
+
+<script>
+const d = new Date();
+document.getElementById("demo").innerHTML = d;
+   
+class Krogec {
+  nextmatrix;
+      constructor(width,height) {
+        this.height = height;
+        this.width = width;
+        this.asimper="adnaksnd";
+        this.nextmatrix=Array(width).fill().map(() => 
+               Array(height).fill(false));
+      //  document.write(this.nextmatrix+"<br>")
+        this.nextmatrix[0][0]=true;
+     //   document.write(this.nextmatrix)
+       //        Array(columns).fill(false));
+        this.initGrid();
+        this.overseerstep();
+      }
+      red(posx,posy)
+      {
+        if(document.getElementById(`${posx},${posy}`).style.backgroundColor == "white"){
+        document.getElementById(`${posx},${posy}`).style.backgroundColor = "Red";}
+        else
+        {if(document.getElementById(`${posx},${posy}`).style.backgroundColor == "red"){document.getElementById(`${posx},${posy}`).style.backgroundColor = "white";}}
+      }
+      green(posx,posy)
+      {
+       
+        document.getElementById(`${posx},${posy}`).style.backgroundColor = "green";
+        
+      }
+
+      initGrid() {
+        for (let i = 0; i < this.height; i++) {
+          for (let j = 0; j < this.width; j++) {
+            document.write(`<button class = 'button'onclick="krogec.red(${i}, ${j})" id="${i},${j}">0</button>`);
+          }
+          document.write("<br>");
+        }
+      }
+      checkaround(posx,posy){
+       let dist=1;
+        let top=dist;
+        let bot=dist;
+        let left=dist;  
+        let right=dist;
+        let sum = 0;
+        if(posx==0)left=0;
+        if(posy==0)top=0;
+        if(posy==this.height-1)bot=0;
+        if(posx==this.width-1)right=0;
+        for(let x=posx-left;x<=posx+right;x++)
+        {
+          for(let y=posy-top;y<=posy+bot;y++)
+          {
+            if((!(x==posx&&y==posy))&&document.getElementById(`${y},${x}`).style.backgroundColor == "red")
+            {
+              sum++;
+            }
+            
+          }
+        }
+        return sum; 
+      }
+      method(){
+        return 10;
+      }
+     
+      overseerstep()
+      {
+        //document.write("d"+this.checkaround(1,1));
+        for(let x=0;x<this.width;x++){
+          for(let y=0;y<this.height;y++){
+            let sum=this.checkaround(x,y)
+            //document.write(this.nextmatrix[x,y])
+            if(sum==3||(sum==2&&document.getElementById(`${y},${x}`).style.backgroundColor == "red")/*||Math.random()>0.995*/){
+              this.nextmatrix[x][y]=true;
+            }else// if(document.getElementById(`${y},${x}`).style.backgroundColor == "red"||document.getElementById(`${posx},${posy}`).style.backgroundColor == "white")
+            {
+              //if(document.getElementById(`${y},${x}`).style.backgroundColor == "red"||document.getElementById(`${posx},${posy}`).style.backgroundColor == "white"){
+              //  if((document.getElementById(`${y},${x}`).style.backgroundColor == "red")||(document.getElementById(`${posx},${posy}`).style.backgroundColor == "white")){
+              this.nextmatrix[x][y]=false;
+            }
+          
+           // document.getElementById(`${y},${x}`).style.backgroundColor = "Red";
+          }
+      } 
+        for(let x=0;x<this.width;x++){
+          for(let y=0;y<this.height;y++){
+            //document.write(this.nextmatrix[x,y])
+            if(this.nextmatrix[x][y]){
+              document.getElementById(`${y},${x}`).style.backgroundColor = "red";
+            }
+            else
+            {
+              if(document.getElementById(`${y},${x}`).style.backgroundColor != "green")
+              document.getElementById(`${y},${x}`).style.backgroundColor = "white";
+            }
+          
+           // document.getElementById(`${y},${x}`).style.backgroundColor = "Red";
+          }
+      }
+       
+        //document.write(""+this.width)
+      /*  for(let x=0;x<this.width;x++){
+          for(let y=0;y<this.height;y++){
+            //document.write(this.nextmatrix[x,y])
+         
+           //   document.getElementById(`${y},${x}`).innerHTML = ""+this.checkaround(x,y);
+            
+          
+           // document.getElementById(`${y},${x}`).style.backgroundColor = "Red";
+          }
+      }*/
+      }
+      overseer()
+      {
+        this.overseerstep();
+        var myinterval=setInterval(this.overseerstep,1000);
+        //uber();
+      }
+
+      circle(posx, posy) {
+        let r = 0;
+        const x = posx;
+        const y = posy;
+
+        function drawCircle() {
+          for (let i = 0; i < r; i++) {
+            const dx = Math.round(Math.sqrt(r * r - ((r - i) * (r - i))));
+            const dy = r - i;
+            document.getElementById(`${x + dx},${y + dy}`).style.backgroundColor = "red";
+            document.getElementById(`${x - dx},${y + dy}`).style.backgroundColor = "red";
+            document.getElementById(`${x + dx},${y - dy}`).style.backgroundColor = "red";
+            document.getElementById(`${x - dx},${y - dy}`).style.backgroundColor = "red";
+          }
+
+          const rdot = Math.abs(r - 1);
+          for (let i = 0; i < rdot; i++) {
+            const dx = Math.round(Math.sqrt(rdot * rdot - ((rdot - i) * (rdot - i))));
+            const dy = rdot - i;
+            document.getElementById(`${x + dx},${y + dy}`).style.backgroundColor = "white";
+            document.getElementById(`${x - dx},${y + dy}`).style.backgroundColor = "white";
+            document.getElementById(`${x + dx},${y - dy}`).style.backgroundColor = "white";
+            document.getElementById(`${x - dx},${y - dy}`).style.backgroundColor = "white";
+          }
+
+          r++;
+          setTimeout(drawCircle, 300);
+        }
+        
+
+        drawCircle();
+      }
+    }
+
+    
+  const krogec = new Krogec(100, 50);
+
+  function launchOverseer() {
+    stepOverseer();
+    var myinterval = setInterval(function () {
+      krogec.overseerstep();
+    }, 300);
+  }
+  krogec.green(1,2)
+
+  // You can also use an arrow function
+  // function launchOverseer() {
+  //   var myinterval = setInterval(() => krogec.overseerstep(), 1000);
+  // }
+  //document.getElementById("1,1").style.backgroundColor="green";
+  function stepOverseer() {
+    krogec.overseerstep();
+  }
+  function shutdownOverseer() {
+    clearInterval(myinterval);
+  }
+</script>
+
+<button onclick="stepOverseer()">Step Overseer</button>
+<button onclick="launchOverseer()">Launch Overseer</button>
+<button onclick="shutdownOverseer()">Shutdown Overseer</button>
+
+</html>
