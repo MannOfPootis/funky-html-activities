@@ -64,6 +64,11 @@
        for (let j = 0; j < this.width; j++)this.black(i, j);
       }
       }
+      blackblock(xstart,ystart,xend,yend)
+      {
+        for (let i = ystart; i < yend; i++) {
+       for (let j = xstart; j < xend; j++)this.black(i, j);
+      }}
       startblock(xstart,ystart,xend,yend)
       {
         for (let i = ystart; i < yend; i++) {
@@ -216,9 +221,54 @@
         krogec.overseerstep();
       }, 300);
     }
-    krogec.ted();
-    krogec.startblock(1,1,10,10);
-    krogec.goalblock(20,20,30,30);
+  //  krogec.ted();
+    krogec.startblock(1,10,10,9);
+    //generateblack();
+  //  krogec.goalblock(20,20,30,30);
+    generategoals();
+    function generategoals()
+    {
+      lengoals=3;
+      blkcnt=30;
+      strtgrids=1;
+      greenncnt=5;
+     /* for(let i=0;i<blkcnt;i++)
+      {
+        x=Math.round(Math.random()*krogec.width)
+        y=Math.round(Math.random()*krogec.height)
+        krogec.blackblock(x-lengoals,y-lengoals,x,y)
+      }*/
+      for(let i=0;i<greenncnt;i++)
+      {
+        x=Math.round(Math.random()*krogec.width)
+        y=Math.round(Math.random()*krogec.height)
+        krogec.goalblock(x-lengoals-1,y-lengoals-1,x,y)
+      }
+
+
+    }
+    function generateblack()
+    {
+      lengoals=3;
+      blkcnt=30;
+      strtgrids=1;
+      greenncnt=5;
+      for(let i=0;i<blkcnt;i++)
+      {
+        x=Math.round(Math.random()*krogec.width)
+        y=Math.round(Math.random()*krogec.height)
+        krogec.blackblock(x-lengoals,y-lengoals,x,y)
+      }
+      /*for(let i=0;i<greenncnt;i++)
+      {
+        x=Math.round(Math.random()*krogec.width)
+        y=Math.round(Math.random()*krogec.height)
+        krogec.goalblock(x-lengoals-1,y-lengoals-1,x,y)
+      }*/
+
+
+    }
+    
    // krogec.ted();
     /*for(let i =10;i<20;i++)
     {
